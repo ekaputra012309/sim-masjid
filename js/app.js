@@ -1,33 +1,10 @@
 const pb = new PocketBase("https://eko012309.alwaysdata.net"); // change to your domain
 
 $(document).ready(function () {
-  // Load partials
-  $("#header").load("partials/header.html", function () {
-    if (pb.authStore.model) {
-      $("#usernameDisplay").text(pb.authStore.model.name);
-    }
-  });
-
-  $("#sidebarContainer").load("partials/sidebar.html", function () {
-    // Toggle sidebar for mobile
-    $(document).on("click", "#toggleSidebar", function () {
-      $("#sidebar").addClass("show");
-    });
-
-    // Close sidebar (FIXED)
-    $(document).on("click", "#closeSidebar", function () {
-      $("#sidebar").removeClass("show");
-    });
-  });
-
-  $("#footer").load("partials/footer.html");
-
   // Redirect if not logged in
   if (!pb.authStore.isValid) {
     window.location.href = "index.html";
   }
-
-  $(".select2").select2();
 
   // Logout modal
   $(document).on("click", "#logoutBtn", function () {
@@ -37,5 +14,28 @@ $(document).ready(function () {
   $(document).on("click", "#confirmLogoutBtn", function () {
     pb.authStore.clear();
     window.location.href = "index.html?loggedout=1";
+  });
+
+  //   sidebar active
+  $(document).ready(function () {
+    let currentPage = window.location.pathname.split("/").pop(); // get file name
+
+    $("#sidebar a.nav-link").each(function () {
+      let linkPage = $(this).attr("href");
+
+      // Match exact page
+      if (linkPage === currentPage) {
+        $(this).addClass("active");
+
+        // If inside submenu, open the parent collapse
+        let parentCollapse = $(this).closest(".collapse");
+        if (parentCollapse.length) {
+          parentCollapse.addClass("show"); // open submenu
+
+          // Highlight the parent menu title
+          parentCollapse.prev(".nav-link").addClass("active");
+        }
+      }
+    });
   });
 });
