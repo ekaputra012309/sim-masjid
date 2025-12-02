@@ -1,4 +1,8 @@
-// ======================================================
+const BASE_URL =
+  window.location.hostname === "rekap-v2.local"
+    ? "/" // local path
+    : "/sim-masjid/"; // GitHub Pages path
+// // ======================================================
 //  TOAST FUNCTION (Bootstrap 5)
 // ======================================================
 function showToast(message, type = "success") {
@@ -74,7 +78,7 @@ if ($("#example").length > 0) {
         return;
       }
       let id = selected.val();
-      window.location.href = "../outcome/edit.html?id=" + id;
+      window.location.href = BASE_URL + "outcome/edit.html?id=" + id;
     });
 
     let idsToDelete = [];
