@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/all.min.css" rel="stylesheet" />
+    <link href="assets/css/datatables.min.css" rel="stylesheet" />
+    <link href="assets/css/style.css" rel="stylesheet" />
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/datatables.min.js"></script>
+
+    <link href="assets/select2/css/select2.min.css" rel="stylesheet" />
+    <script src="assets/select2/js/select2.min.js"></script>
+    <style>
+      .btn-primary {
+        background-color: #2a4988 !important;
+        border-color: #2a4988 !important;
+      }
+    </style>
+  </head>
+
+  <body class="d-flex flex-column">
+    <!-- HEADER -->
+    <div id="header"></div>
+    <!-- SIDEBAR -->
+    <div id="sidebarContainer"></div>
+
+    <div class="content-wrapper">
+      <div class="container-fluid">
+        <h2>Dashboard</h2>
+
+        <style>
+          .card-flat {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+          }
+
+          .bg-warm-orange {
+            background-color: #ffe0b2;
+          }
+
+          /* soft orange */
+          .bg-warm-green {
+            background-color: #c8e6c9;
+          }
+
+          /* soft green */
+          .bg-warm-blue {
+            background-color: #bbdefb;
+          }
+
+          /* soft blue */
+          .bg-warm-red {
+            background-color: #ffcdd2;
+          }
+
+          /* soft red */
+          .bg-warm-yellow {
+            background-color: #fff9c4;
+          }
+
+          /* soft yellow */
+        </style>
+
+        <div class="row mt-4">
+          <!-- Saldo Card -->
+          <div class="col-lg-4 mb-3">
+            <div
+              class="card card-flat bg-warm-blue text-dark p-4 h-100 text-left"
+            >
+              <i class="fas fa-wallet fa-3x mb-3"></i>
+              <small class="d-block">Saldo Desember 2025</small>
+              <h1 class="fw-bold mb-0">1.330.000</h1>
+            </div>
+          </div>
+
+          <!-- Pemasukan & Pengeluaran Card -->
+          <div class="col-lg-4 mb-3">
+            <div class="card card-flat bg-light p-4 h-100">
+              <!-- Pemasukan -->
+              <div
+                class="d-flex align-items-center justify-content-between mb-4"
+              >
+                <div>
+                  <small class="text-muted d-block">Pemasukan</small>
+                  <h3 class="fw-bold mb-0">0</h3>
+                </div>
+                <i class="fas fa-arrow-down fa-2x text-success"></i>
+              </div>
+              <!-- Pengeluaran -->
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <small class="text-muted d-block">Pengeluaran</small>
+                  <h3 class="fw-bold mb-0">0</h3>
+                </div>
+                <i class="fas fa-arrow-up fa-2x text-danger"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Doom, Gess, Gib Cards -->
+          <div class="col-lg-4">
+            <div class="card card-flat bg-warm-green p-3 mb-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold">Doom</span>
+                <h5 class="mb-0">0</h5>
+              </div>
+            </div>
+            <div class="card card-flat bg-warm-yellow p-3 mb-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold">Gess</span>
+                <h5 class="mb-0">0</h5>
+              </div>
+            </div>
+            <div class="card card-flat bg-warm-red p-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold">Gib</span>
+                <h5 class="mb-0">0</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <form method="GET" class="mb-4">
+          <div class="row">
+            <div class="col-md-3">
+              <label for="year">Pilih Tahun</label>
+              <select
+                name="year"
+                id="year"
+                class="form-control"
+                onchange="this.form.submit()"
+              >
+                <option value="2025" selected>2025</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="month">Pilih Bulan</label>
+              <select
+                name="month"
+                id="month"
+                class="form-control"
+                onchange="this.form.submit()"
+              >
+                <option value="1">Januari</option>
+                <option value="2">Februari</option>
+                <option value="3">Maret</option>
+                <option value="4">April</option>
+                <option value="5">Mei</option>
+                <option value="6">Juni</option>
+                <option value="7">Juli</option>
+                <option value="8">Agustus</option>
+                <option value="9">September</option>
+                <option value="10">Oktober</option>
+                <option value="11">November</option>
+                <option value="12" selected>Desember</option>
+              </select>
+            </div>
+          </div>
+        </form>
+
+        <div class="row mt-4">
+          <div class="col-md-12 mb-4">
+            <div class="card p-3">
+              <h5>Grafik Tahun (2025)</h5>
+              <canvas id="yearChart" height="400px"></canvas>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="card p-3">
+              <h5>Grafik Bulan (Desember 2025)</h5>
+              <canvas id="monthChart" height="400"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <script src="assets/js/chart.umd.min.js"></script>
+        <script>
+          // Yearly Chart
+          new Chart(document.getElementById("yearChart"), {
+            type: "bar",
+            data: {
+              labels: [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec",
+              ],
+              datasets: [
+                {
+                  label: "Pemasukan",
+                  data: [0, 0, 0, 0, 0, 0, 0, 550000, 0, 220000, 0, 0],
+                  backgroundColor: "rgba(54, 162, 235, 0.6)",
+                },
+                {
+                  label: "Pengeluaran",
+                  data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                  backgroundColor: "rgba(255, 99, 132, 0.6)",
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: "top",
+                },
+              },
+            },
+          });
+
+          // Monthly Chart
+          new Chart(document.getElementById("monthChart"), {
+            type: "bar",
+            data: {
+              labels: ["This Month"], // only one group
+              datasets: [
+                {
+                  label: "Pemasukan",
+                  data: [0],
+                  backgroundColor: "rgba(54, 162, 235, 0.6)",
+                },
+                {
+                  label: "Pengeluaran",
+                  data: [0],
+                  backgroundColor: "rgba(255, 99, 132, 0.6)",
+                },
+                {
+                  label: "Doom",
+                  data: [0],
+                  backgroundColor: "rgba(255, 206, 86, 0.6)",
+                },
+                {
+                  label: "Gess",
+                  data: [0],
+                  backgroundColor: "rgba(75, 192, 192, 0.6)",
+                },
+                {
+                  label: "Gib",
+                  data: [0],
+                  backgroundColor: "rgba(153, 102, 255, 0.6)",
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: "top",
+                },
+              },
+            },
+          });
+        </script>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div id="footer"></div>
+
+    <script src="https://unpkg.com/pocketbase/dist/pocketbase.umd.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

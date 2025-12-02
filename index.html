@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SIM Masjid App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/all.min.css" rel="stylesheet" />
+
+    <style>
+      html,
+      body {
+        height: 100%;
+      }
+      .form-signin {
+        max-width: 330px;
+        padding: 1rem;
+      }
+      .spinner-border {
+        width: 1rem;
+        height: 1rem;
+      }
+      #toastBox {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1080;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-light d-flex justify-content-center align-items-center vh-100"
+  >
+    <div id="toastBox"></div>
+
+    <main class="form-signin w-100 m-auto">
+      <form id="loginForm">
+        <div class="form-floating mb-2">
+          <input
+            type="text"
+            id="email"
+            class="form-control"
+            placeholder="Email or username"
+            required
+          />
+          <label>Email or Username</label>
+        </div>
+
+        <div class="form-floating mb-3 position-relative">
+          <input
+            type="password"
+            id="password"
+            class="form-control"
+            placeholder="Password"
+            required
+          />
+          <label>Password</label>
+
+          <!-- Show/Hide Password -->
+          <button
+            type="button"
+            id="togglePassword"
+            class="btn position-absolute top-50 end-0 translate-middle-y me-2 p-0"
+            style="border: none; background: none"
+          >
+            <i id="toggleIcon" class="fa fa-eye"></i>
+          </button>
+        </div>
+
+        <button class="btn btn-primary w-100 py-2" id="loginBtn" type="submit">
+          <span id="btnText">Sign in</span>
+          <span
+            id="btnSpinner"
+            class="spinner-border spinner-border-sm d-none"
+          ></span>
+        </button>
+      </form>
+      <div class="text-center p-3">© 2025 Masjid</div>
+    </main>
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/pocketbase/dist/pocketbase.umd.js"></script>
+    <script src="js/auth.js"></script>
+  </body>
+</html>
