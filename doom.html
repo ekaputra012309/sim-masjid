@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>List Outcomes</title>
+    <title>DOOM</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
@@ -34,7 +34,7 @@
     <div id="sidebarContainer"></div>
 
     <div class="content-wrapper">
-      <h2>List Outcomes</h2>
+      <h2>DOOM</h2>
       <!-- New Row for DataTable -->
       <div class="row mt-4">
         <div class="col-12">
@@ -42,10 +42,10 @@
             <div
               class="card-header d-flex justify-content-between align-items-center"
             >
-              <h5 class="mb-0 d-none d-md-block">Data List Outcomes</h5>
+              <h5 class="mb-0 d-none d-md-block">Data DOOM</h5>
               <div>
                 <a
-                  href="outcome/create.html"
+                  href="doom/create.html"
                   id="add-btn"
                   class="btn btn-sm btn-success"
                   title="Add"
@@ -79,7 +79,10 @@
                     <thead>
                       <tr>
                         <th><input type="checkbox" id="select-all" /></th>
-                        <th>List Pengeluaran</th>
+                        <th>Tanggal</th>
+                        <th>Nama Donatur</th>
+                        <th>Nominal</th>
+                        <th>Keterangan</th>
                       </tr>
                     </thead>
                   </table>
@@ -125,14 +128,14 @@
         </div>
       </div>
 
-      <!-- TOAST CONTAINER (must load before outcome.js) -->
+      <!-- TOAST CONTAINER (must load before doom.js) -->
       <div
         id="toastContainer"
         class="position-fixed bottom-0 end-0 p-3"
         style="z-index: 9999"
       ></div>
 
-      <script src="js/outcome.js"></script>
+      <script src="js/doom.js"></script>
     </div>
 
     <!-- FOOTER -->

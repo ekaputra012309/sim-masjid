@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Edit GESS</title>
+    <title>Edit DOOM</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link rel="icon" type="image/x-icon" href="../assets/img/favicon.ico" />
@@ -12,8 +12,11 @@
 
     <script src="../assets/js/jquery.min.js"></script>
     <script src="../assets/js/bootstrap.bundle.min.js"></script>
-    <script src="https://unpkg.com/pocketbase/dist/pocketbase.umd.js"></script>
 
+    <link href="../assets/select2/css/select2.min.css" rel="stylesheet" />
+    <script src="../assets/select2/js/select2.min.js"></script>
+
+    <script src="https://unpkg.com/pocketbase/dist/pocketbase.umd.js"></script>
     <script src="../js/app.js"></script>
     <script src="../js/layout2.js"></script>
 
@@ -30,18 +33,18 @@
     <div id="sidebarContainer"></div>
 
     <div class="content-wrapper">
-      <h2>Edit GESS</h2>
+      <h2>Edit DOOM</h2>
 
       <div class="row mt-4">
         <div class="col-12 col-md-12">
           <div class="card">
             <div class="card-header">
-              <h5 class="mb-0">Edit Gess</h5>
+              <h5 class="mb-0">Edit Doom</h5>
             </div>
 
             <div class="card-body">
-              <form id="gessEditForm">
-                <input type="hidden" id="gess_id" />
+              <form id="doomEditForm">
+                <input type="hidden" id="doom_id" />
 
                 <div class="row mb-2">
                   <div class="col-md-2">
@@ -70,21 +73,6 @@
                     />
                   </div>
 
-                  <div class="col-md-2">
-                    <label for="kaleng" class="form-label"
-                      >Jml Kaleng <span class="text-danger">*</span></label
-                    >
-                    <input
-                      type="number"
-                      class="form-control"
-                      id="kaleng"
-                      placeholder="Jumlah Kaleng"
-                      value=""
-                      min="1"
-                      required
-                    />
-                  </div>
-
                   <div class="col-md-3">
                     <label for="nominal" class="form-label"
                       >Nominal (Rp) <span class="text-danger">*</span></label
@@ -96,34 +84,29 @@
                       placeholder="Nominal"
                       value=""
                       min="0"
-                      step="0.01"
                       required
                     />
                   </div>
 
-                  <div class="col-md-7">
-                    <label for="keterangan" class="form-label"
-                      >Keterangan (opsional)</label
+                  <div class="col-md-3">
+                    <label for="bayar" class="form-label"
+                      >Cara Bayar <span class="text-danger">*</span></label
                     >
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="keterangan"
-                      placeholder="Keterangan"
-                      value=""
-                    />
+                    <select class="form-control" id="bayare" required>
+                      <option value="">Pilih Cara Bayar</option>
+                    </select>
                   </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Update</button>
-                <a href="../gess.html" class="btn btn-secondary">Kembali</a>
+                <a href="../doom.html" class="btn btn-secondary">Kembali</a>
               </form>
             </div>
           </div>
         </div>
       </div>
 
-      <script src="../js/gess.js"></script>
+      <script src="../js/doom.js"></script>
     </div>
 
     <div id="footer"></div>
