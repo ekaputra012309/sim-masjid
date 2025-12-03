@@ -1,33 +1,3 @@
-// // ======================================================
-//  TOAST FUNCTION (Bootstrap 5)
-// ======================================================
-function showToast(message, type = "success") {
-  let bg = type === "success" ? "bg-success" : "bg-danger";
-
-  let toast = `
-    <div class="toast align-items-center text-white ${bg} border-0" role="alert" aria-live="assertive">
-      <div class="d-flex">
-        <div class="toast-body">${message}</div>
-        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-      </div>
-    </div>`;
-
-  $("#toastContainer").append(toast);
-
-  let $toast = $("#toastContainer .toast").last();
-  let bsToast = new bootstrap.Toast($toast);
-  bsToast.show();
-}
-
-// Add container if not exists
-$(document).ready(function () {
-  if ($("#toastContainer").length === 0) {
-    $("body").append(
-      `<div id="toastContainer" class="toast-container position-fixed bottom-0 end-0 p-3"></div>`
-    );
-  }
-});
-
 // ======================================================
 //  LIST PAGE (gib.html)
 // ======================================================
