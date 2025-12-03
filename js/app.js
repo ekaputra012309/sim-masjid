@@ -39,3 +39,45 @@ $(document).ready(function () {
     });
   });
 });
+
+const BASE_URL =
+  window.location.hostname === "rekap-v2.local"
+    ? "/" // local path
+    : "/sim-masjid/"; // GitHub Pages path
+
+// tanggal format
+function formatTanggalIndo(dateString) {
+  if (!dateString) return "-";
+
+  const date = new Date(dateString);
+
+  const bulanIndo = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "Mei",
+    "Jun",
+    "Jul",
+    "Agt",
+    "Sep",
+    "Okt",
+    "Nov",
+    "Des",
+  ];
+
+  const d = date.getDate();
+  const m = bulanIndo[date.getMonth()];
+  const y = date.getFullYear();
+
+  return `${d} ${m} ${y}`;
+}
+
+$(document).ready(function () {
+  const $tanggal = $("#tanggal");
+
+  if ($tanggal.length && !$tanggal.val()) {
+    const today = new Date().toISOString().split("T")[0];
+    $tanggal.val(today);
+  }
+});

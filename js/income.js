@@ -1,8 +1,3 @@
-const BASE_URL =
-  window.location.hostname === "rekap-v2.local"
-    ? "/" // local path
-    : "/sim-masjid/"; // GitHub Pages path
-
 // ======================================================
 //  TOAST FUNCTION (Bootstrap 5)
 // ======================================================

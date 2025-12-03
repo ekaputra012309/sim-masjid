@@ -29,7 +29,7 @@ $(document).ready(function () {
 });
 
 // ======================================================
-//  LIST PAGE (outcome.html)
+//  LIST PAGE (gess.html)
 // ======================================================
 if ($("#example").length > 0) {
   $(document).ready(function () {
@@ -38,12 +38,16 @@ if ($("#example").length > 0) {
       processing: true,
       serverSide: false, // PB is server, no need serverSide
       ajax: function (data, callback) {
-        pb.collection("outcomes")
+        pb.collection("gesss")
           .getFullList({ sort: "-created" })
           .then((records) => {
             let rows = records.map((r) => ({
               checkbox: `<input type="checkbox" class="row-checkbox" value="${r.id}">`,
-              nama_list_out: r.nama_list_out,
+              tanggal: formatTanggalIndo(r.tanggal),
+              nama_donatur: r.nama_donatur,
+              kaleng: r.kaleng,
+              nominal: r.nominal,
+              keterangan: r.keterangan,
             }));
 
             callback({ data: rows });
@@ -51,12 +55,16 @@ if ($("#example").length > 0) {
       },
       columns: [
         { data: "checkbox", orderable: false, searchable: false },
-        { data: "nama_list_out" },
+        { data: "tanggal" },
+        { data: "nama_donatur" },
+        { data: "kaleng" },
+        { data: "nominal" },
+        { data: "keterangan" },
       ],
     });
 
     // REALTIME
-    pb.collection("outcomes").subscribe("*", function () {
+    pb.collection("gesss").subscribe("*", function () {
       table.ajax.reload(null, false);
       showToast("Data updated (realtime)", "success");
     });
@@ -74,7 +82,7 @@ if ($("#example").length > 0) {
         return;
       }
       let id = selected.val();
-      window.location.href = BASE_URL + "outcome/edit.html?id=" + id;
+      window.location.href = BASE_URL + "gess/edit.html?id=" + id;
     });
 
     let idsToDelete = [];
@@ -105,7 +113,7 @@ if ($("#example").length > 0) {
       // delete one by one
       for (const id of idsToDelete) {
         try {
-          await pb.collection("outcomes").delete(id);
+          await pb.collection("gesss").delete(id);
         } catch (err) {
           showToast("Error deleting ID: " + id, "danger");
         }
@@ -121,25 +129,29 @@ if ($("#example").length > 0) {
 }
 
 // ======================================================
-//  CREATE FORM PAGE (outcome/add.html)
+//  CREATE FORM PAGE (gess/add.html)
 // ======================================================
-if ($("#outcomeForm").length > 0) {
+if ($("#gessForm").length > 0) {
   $(document).ready(function () {
-    $("#outcomeForm").on("submit", async function (e) {
+    $("#gessForm").on("submit", async function (e) {
       e.preventDefault();
 
       let data = {
-        nama_list_out: $("#nama_list_out").val(),
+        tanggal: $("#tanggal").val(),
+        nama_donatur: $("#nama_donatur").val(),
+        kaleng: $("#kaleng").val(),
+        nominal: $("#nominal").val(),
+        keterangan: $("#keterangan").val(),
         user: pb.authStore.model ? pb.authStore.model.id : null,
       };
 
       try {
-        await pb.collection("outcomes").create(data);
+        await pb.collection("gesss").create(data);
 
         showToast("Berhasil disimpan!", "success");
 
         setTimeout(() => {
-          window.location.href = "../outcome.html";
+          window.location.href = "../gess.html";
         }, 1200);
       } catch (err) {
         showToast("Error: " + err.message, "danger");
@@ -149,41 +161,49 @@ if ($("#outcomeForm").length > 0) {
 }
 
 // ======================================================
-// EDIT FORM PAGE (outcome/edit.html)
+// EDIT FORM PAGE (gess/edit.html)
 // ======================================================
 // Get ID from URL (?id=xxxx)
-// EDIT FORM PAGE (outcome/edit.html)
+// EDIT FORM PAGE (gess/edit.html)
 const urlParams = new URLSearchParams(window.location.search);
 const recordId = urlParams.get("id");
 
-if (recordId && $("#outcomeEditForm").length > 0) {
-  async function loadoutcomeData() {
+if (recordId && $("#gessEditForm").length > 0) {
+  async function loadgessData() {
     try {
-      const record = await pb.collection("outcomes").getOne(recordId);
+      const record = await pb.collection("gesss").getOne(recordId);
 
-      $("#outcome_id").val(record.id);
-      $("#nama_list_out").val(record.nama_list_out);
+      $("#gess_id").val(record.id);
+      $("#tanggal").val(record.tanggal.substring(0, 10));
+      $("#nama_donatur").val(record.nama_donatur);
+      $("#kaleng").val(record.kaleng);
+      $("#nominal").val(record.nominal);
+      $("#keterangan").val(record.keterangan);
     } catch (err) {
       showToast("Failed to load data", "danger");
     }
   }
 
-  loadoutcomeData();
+  loadgessData();
 
-  $("#outcomeEditForm").on("submit", async function (e) {
+  $("#gessEditForm").on("submit", async function (e) {
     e.preventDefault();
 
     let data = {
-      nama_list_out: $("#nama_list_out").val(),
+      tanggal: $("#tanggal").val(),
+      nama_donatur: $("#nama_donatur").val(),
+      kaleng: $("#kaleng").val(),
+      nominal: $("#nominal").val(),
+      keterangan: $("#keterangan").val(),
       user: pb.authStore.model ? pb.authStore.model.id : null,
     };
 
     try {
-      await pb.collection("outcomes").update(recordId, data);
+      await pb.collection("gesss").update(recordId, data);
       showToast("Updated successfully!", "success");
 
       setTimeout(() => {
-        window.location.href = "../outcome.html";
+        window.location.href = "../gess.html";
       }, 1200);
     } catch (err) {
       showToast("Error updating data: " + err.message, "danger");
