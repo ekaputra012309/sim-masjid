@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>GIB</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/all.min.css" rel="stylesheet" />
+    <link href="assets/css/datatables.min.css" rel="stylesheet" />
+    <link href="assets/css/style.css" rel="stylesheet" />
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/datatables.min.js"></script>
+
+    <script src="https://unpkg.com/pocketbase/dist/pocketbase.umd.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/layout1.js"></script>
+
+    <style>
+      .btn-primary {
+        background-color: #2a4988 !important;
+        border-color: #2a4988 !important;
+      }
+    </style>
+  </head>
+
+  <body class="d-flex flex-column">
+    <!-- HEADER -->
+    <div id="header"></div>
+    <!-- SIDEBAR -->
+    <div id="sidebarContainer"></div>
+
+    <div class="content-wrapper">
+      <h2>GIB</h2>
+      <!-- New Row for DataTable -->
+      <div class="row mt-4">
+        <div class="col-12">
+          <div class="card">
+            <div
+              class="card-header d-flex justify-content-between align-items-center"
+            >
+              <h5 class="mb-0 d-none d-md-block">Data GIB</h5>
+              <div>
+                <a
+                  href="gib/create.html"
+                  id="add-btn"
+                  class="btn btn-sm btn-success"
+                  title="Add"
+                >
+                  Add <i class="fas fa-plus"></i>
+                </a>
+                <button
+                  id="edit-btn"
+                  class="btn btn-sm btn-primary ms-2"
+                  title="Edit"
+                >
+                  Edit <i class="fas fa-edit"></i>
+                </button>
+                <button
+                  id="delete-btn"
+                  class="btn btn-sm btn-danger ms-2"
+                  title="Delete"
+                >
+                  Hapus <i class="fas fa-trash-alt"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div id="table-wrapper">
+                <div class="table-responsive">
+                  <table
+                    id="example"
+                    class="table table-striped"
+                    style="width: 100%"
+                  >
+                    <thead>
+                      <tr>
+                        <th><input type="checkbox" id="select-all" /></th>
+                        <th>Tanggal</th>
+                        <th>Nama Donatur</th>
+                        <th>Nominal</th>
+                        <th>Keterangan</th>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Delete Confirmation Modal -->
+      <div class="modal fade" id="confirmDeleteModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+              <h5 class="modal-title">Confirm Delete</h5>
+              <button
+                type="button"
+                class="btn-close btn-close-white"
+                data-bs-dismiss="modal"
+              ></button>
+            </div>
+            <div class="modal-body">
+              Are you sure you want to delete the selected items?
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                id="confirmDeleteBtn"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOAST CONTAINER (must load before gib.js) -->
+      <div
+        id="toastContainer"
+        class="position-fixed bottom-0 end-0 p-3"
+        style="z-index: 9999"
+      ></div>
+
+      <script src="js/gib.js"></script>
+    </div>
+
+    <!-- FOOTER -->
+    <div id="footer"></div>
+  </body>
+</html>
