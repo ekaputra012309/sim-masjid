@@ -127,37 +127,37 @@ if ($("#example").length > 0) {
   });
 }
 
-// load cara bayar dropdown
-// Load Cara Bayar from PB
-async function loadBayarOptions() {
-  try {
-    const list = await pb
-      .collection("bayars")
-      .getFullList({ sort: "cara_bayar" });
-
-    list.forEach((item) => {
-      $("#bayar").append(
-        `<option value="${item.id}">${item.cara_bayar}</option>`
-      );
-    });
-
-    // Activate Select2
-    $("#bayar").select2({
-      width: "100%",
-      placeholder: "Pilih Cara Bayar",
-      allowClear: true,
-    });
-  } catch (err) {
-    console.error("Error loading bayar:", err);
-  }
-}
-
-loadBayarOptions();
-
 // ======================================================
 //  CREATE FORM PAGE (doom/add.html)
 // ======================================================
 if ($("#doomForm").length > 0) {
+  // load cara bayar dropdown
+  // Load Cara Bayar from PB
+  async function loadBayarOptions() {
+    try {
+      const list = await pb
+        .collection("bayars")
+        .getFullList({ sort: "cara_bayar" });
+
+      list.forEach((item) => {
+        $("#bayar").append(
+          `<option value="${item.id}">${item.cara_bayar}</option>`
+        );
+      });
+
+      // Activate Select2
+      $("#bayar").select2({
+        width: "100%",
+        placeholder: "Pilih Cara Bayar",
+        allowClear: true,
+      });
+    } catch (err) {
+      console.error("Error loading bayar:", err);
+    }
+  }
+
+  loadBayarOptions();
+
   $(document).ready(function () {
     $("#doomForm").on("submit", async function (e) {
       e.preventDefault();
