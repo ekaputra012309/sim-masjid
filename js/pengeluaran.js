@@ -1,5 +1,5 @@
 // ======================================================
-//  LIST PAGE (pemasukan.html)
+//  LIST PAGE (pengeluaran.html)
 // ======================================================
 if ($("#example").length > 0) {
   $(document).ready(function () {
@@ -8,7 +8,7 @@ if ($("#example").length > 0) {
       processing: true,
       serverSide: false, // PB is server, no need serverSide
       ajax: function (data, callback) {
-        pb.collection("pemasukan_headers")
+        pb.collection("pengeluaran_headers")
           .getFullList({ sort: "-tanggal", expand: "user" })
           .then((records) => {
             let rows = records.map((r) => ({
@@ -34,7 +34,7 @@ if ($("#example").length > 0) {
     });
 
     // REALTIME
-    pb.collection("pemasukan_headers").subscribe("*", function () {
+    pb.collection("pengeluaran_headers").subscribe("*", function () {
       table.ajax.reload(null, false);
       showToast("Data updated (realtime)", "success");
     });
@@ -52,7 +52,7 @@ if ($("#example").length > 0) {
         return;
       }
       let id = selected.val();
-      window.location.href = BASE_URL + "pemasukan/edit.html?id=" + id;
+      window.location.href = BASE_URL + "pengeluaran/edit.html?id=" + id;
     });
 
     let idsToDelete = [];
@@ -83,17 +83,19 @@ if ($("#example").length > 0) {
       for (const id of idsToDelete) {
         try {
           // 1️⃣ Ambil semua DETAIL yang terkait header ini
-          const details = await pb.collection("pemasukan_details").getFullList({
-            filter: `pemasukan_header="${id}"`,
-          });
+          const details = await pb
+            .collection("pengeluaran_details")
+            .getFullList({
+              filter: `pengeluaran_header="${id}"`,
+            });
 
           // 2️⃣ Hapus DETAIL satu per satu
           for (const d of details) {
-            await pb.collection("pemasukan_details").delete(d.id);
+            await pb.collection("pengeluaran_details").delete(d.id);
           }
 
           // 3️⃣ Hapus HEADER
-          await pb.collection("pemasukan_headers").delete(id);
+          await pb.collection("pengeluaran_headers").delete(id);
         } catch (err) {
           showToast("Error deleting ID: " + id, "danger");
         }
@@ -116,15 +118,15 @@ if ($("#example").length > 0) {
 
     try {
       // Get HEADER data
-      const header = await pb.collection("pemasukan_headers").getOne(id, {
+      const header = await pb.collection("pengeluaran_headers").getOne(id, {
         expand: "user",
       });
 
       // Get related DETAILS
-      const details = await pb.collection("pemasukan_details").getFullList({
-        filter: `pemasukan_header="${id}"`,
+      const details = await pb.collection("pengeluaran_details").getFullList({
+        filter: `pengeluaran_header="${id}"`,
         sort: "created",
-        expand: "income",
+        expand: "outcome",
       });
 
       let html = `
@@ -147,7 +149,7 @@ if ($("#example").length > 0) {
         html += `
           <tr>
             <td>${
-              d.expand?.income?.nama_list_in ?? d.custom_rincian ?? "-"
+              d.expand?.outcome?.nama_list_out ?? d.custom_rincian ?? "-"
             }</td>
             <td class="d-flex justify-content-between">
               <span>Rp</span>
@@ -170,15 +172,15 @@ if ($("#example").length > 0) {
 }
 
 // ======================================================
-//  CREATE FORM PAGE (pemasukan/add.html)
+//  CREATE FORM PAGE (pengeluaran/add.html)
 // ======================================================
-if ($("#pemasukanForm").length > 0) {
-  // load cara income dropdown
-  // Load Cara income from PB
-  async function loadIncomeOptions(selectElem) {
+if ($("#pengeluaranForm").length > 0) {
+  // load cara outcome dropdown
+  // Load Cara outcome from PB
+  async function loadoutcomeOptions(selectElem) {
     try {
       if (!selectElem || selectElem.length === 0) {
-        console.error("Income select element not found");
+        console.error("outcome select element not found");
         return;
       }
 
@@ -187,29 +189,29 @@ if ($("#pemasukanForm").length > 0) {
 
       selectElem.append(`<option value="">-- Pilih Rincian --</option>`);
 
-      const list = await pb.collection("incomes").getFullList({
-        sort: "nama_list_in",
+      const list = await pb.collection("outcomes").getFullList({
+        sort: "nama_list_out",
       });
 
       // Fill dropdown
       list.forEach((item) => {
         selectElem.append(
-          `<option value="${item.id}">${item.nama_list_in}</option>`
+          `<option value="${item.id}">${item.nama_list_out}</option>`
         );
       });
 
       // Add CUSTOM OPTION
       selectElem.append(`<option value="custom">-- Custom Rincian --</option>`);
     } catch (err) {
-      console.error("Error load incomes:", err);
+      console.error("Error load outcomes:", err);
     }
   }
 
   $(document).ready(function () {
-    loadIncomeOptions($(".income-select").first());
+    loadoutcomeOptions($(".outcome-select").first());
   });
 
-  $(document).on("change", ".income-select", function () {
+  $(document).on("change", ".outcome-select", function () {
     let customInput = $(this).closest("td").find(".custom-input");
 
     if ($(this).val() === "custom") {
@@ -227,7 +229,7 @@ if ($("#pemasukanForm").length > 0) {
     let newRow = `
         <tr>
             <td>
-                <select name="details[${rowCount}][income_id]" class="form-control income-select"></select>
+                <select name="details[${rowCount}][outcome_id]" class="form-control outcome-select"></select>
                 <input type="text" name="details[${rowCount}][custom_rincian]" class="form-control mt-2 custom-input d-none" placeholder="Masukkan Rincian Custom">
             </td>
             <td><input type="number" name="details[${rowCount}][nominal]" class="form-control"></td>
@@ -242,8 +244,8 @@ if ($("#pemasukanForm").length > 0) {
 
     $("#detailTable tbody").append(newRow);
 
-    let newSelect = $("#detailTable tbody tr").last().find(".income-select");
-    loadIncomeOptions(newSelect);
+    let newSelect = $("#detailTable tbody tr").last().find(".outcome-select");
+    loadoutcomeOptions(newSelect);
   });
 
   $(document).on("click", ".removeRow", function () {
@@ -251,7 +253,7 @@ if ($("#pemasukanForm").length > 0) {
   });
 
   $(document).ready(function () {
-    $("#pemasukanForm").on("submit", async function (e) {
+    $("#pengeluaranForm").on("submit", async function (e) {
       e.preventDefault();
 
       try {
@@ -260,14 +262,14 @@ if ($("#pemasukanForm").length > 0) {
 
         // 🔹 COLLECT ALL DETAILS FIRST
         $("#detailTable tbody tr").each(function () {
-          let income_id = $(this).find(".income-select").val();
+          let outcome_id = $(this).find(".outcome-select").val();
           let custom_rincian = $(this).find(".custom-input").val();
           let nominal = parseInt($(this).find("input[name*='nominal']").val());
           let keterangan = $(this).find("input[name*='keterangan']").val();
 
           details.push({
-            income: income_id === "custom" ? null : income_id,
-            custom_rincian: income_id === "custom" ? custom_rincian : "",
+            outcome: outcome_id === "custom" ? null : outcome_id,
+            custom_rincian: outcome_id === "custom" ? custom_rincian : "",
             nominal,
             keterangan,
           });
@@ -276,7 +278,7 @@ if ($("#pemasukanForm").length > 0) {
         });
 
         // 🔹 STEP 2 — Save header WITH total
-        const header = await pb.collection("pemasukan_headers").create({
+        const header = await pb.collection("pengeluaran_headers").create({
           tanggal: $("#tanggal").val(),
           user: pb.authStore.model ? pb.authStore.model.id : null,
           total: total,
@@ -284,9 +286,9 @@ if ($("#pemasukanForm").length > 0) {
 
         // 🔹 STEP 3 — Save each detail (await 1 by 1)
         for (let d of details) {
-          await pb.collection("pemasukan_details").create({
-            pemasukan_header: header.id,
-            income: d.income,
+          await pb.collection("pengeluaran_details").create({
+            pengeluaran_header: header.id,
+            outcome: d.outcome,
             custom_rincian: d.custom_rincian,
             nominal: d.nominal,
             keterangan: d.keterangan,
@@ -296,7 +298,7 @@ if ($("#pemasukanForm").length > 0) {
         showToast("Berhasil disimpan!", "success");
 
         setTimeout(() => {
-          window.location.href = "../pemasukan.html";
+          window.location.href = "../pengeluaran.html";
         }, 1200);
       } catch (err) {
         showToast("Error: " + err.message, "danger");
@@ -306,8 +308,8 @@ if ($("#pemasukanForm").length > 0) {
 }
 
 // // Get ID from URL (?id=xxxx)
-// // EDIT FORM PAGE (pemasukan/edit.html)
-if ($("#pemasukanFormEdit").length > 0) {
+// // EDIT FORM PAGE (pengeluaran/edit.html)
+if ($("#pengeluaranFormEdit").length > 0) {
   let headerId = null; // <<< GLOBAL
 
   async function init() {
@@ -315,7 +317,7 @@ if ($("#pemasukanFormEdit").length > 0) {
     headerId = urlParams.get("id"); // <<< SET GLOBAL
     $("#header_id").val(headerId);
 
-    await loadAllIncomes();
+    await loadAlloutcomes();
     await loadEditData(headerId);
   }
 
@@ -323,13 +325,15 @@ if ($("#pemasukanFormEdit").length > 0) {
 
   async function loadEditData(headerId) {
     try {
-      const header = await pb.collection("pemasukan_headers").getOne(headerId);
+      const header = await pb
+        .collection("pengeluaran_headers")
+        .getOne(headerId);
       $("#tanggal").val(header.tanggal.substring(0, 10));
 
-      const details = await pb.collection("pemasukan_details").getFullList({
-        filter: `pemasukan_header="${headerId}"`,
+      const details = await pb.collection("pengeluaran_details").getFullList({
+        filter: `pengeluaran_header="${headerId}"`,
         sort: "created",
-        expand: "income",
+        expand: "outcome",
       });
 
       $("#detailTableEdit tbody").empty();
@@ -338,7 +342,7 @@ if ($("#pemasukanFormEdit").length > 0) {
         $("#detailTableEdit tbody").append(`
         <tr data-detail-id="${d.id}">
           <td>
-            <select class="form-control income-select"></select>
+            <select class="form-control outcome-select"></select>
             <input type="text" class="form-control mt-2 custom-input ${
               d.custom_rincian ? "" : "d-none"
             }" value="${d.custom_rincian ?? ""}">
@@ -359,12 +363,12 @@ if ($("#pemasukanFormEdit").length > 0) {
         </tr>
       `);
 
-        let selectedIncomeId =
-          d.income || (d.expand?.income ? d.expand.income.id : null);
+        let selectedoutcomeId =
+          d.outcome || (d.expand?.outcome ? d.expand.outcome.id : null);
 
-        loadIncomeOptions(
-          $("#detailTableEdit tbody tr").last().find(".income-select"),
-          selectedIncomeId,
+        loadoutcomeOptions(
+          $("#detailTableEdit tbody tr").last().find(".outcome-select"),
+          selectedoutcomeId,
           d.custom_rincian
         );
       });
@@ -374,15 +378,15 @@ if ($("#pemasukanFormEdit").length > 0) {
     }
   }
 
-  let incomeList = [];
+  let outcomeList = [];
 
-  async function loadAllIncomes() {
-    incomeList = await pb.collection("incomes").getFullList({
-      sort: "nama_list_in",
+  async function loadAlloutcomes() {
+    outcomeList = await pb.collection("outcomes").getFullList({
+      sort: "nama_list_out",
     });
   }
 
-  function loadIncomeOptions(
+  function loadoutcomeOptions(
     selectElem,
     selectedValue = null,
     customText = ""
@@ -399,15 +403,15 @@ if ($("#pemasukanFormEdit").length > 0) {
     selectElem.empty();
     selectElem.append(`<option value="">-- Pilih Rincian --</option>`);
 
-    incomeList.forEach((item) => {
+    outcomeList.forEach((item) => {
       selectElem.append(
-        `<option value="${item.id}">${item.nama_list_in}</option>`
+        `<option value="${item.id}">${item.nama_list_out}</option>`
       );
     });
 
     selectElem.append(`<option value="custom">-- Custom Rincian --</option>`);
 
-    // CASE 1: Has income → select dropdown
+    // CASE 1: Has outcome → select dropdown
     if (selectedValue && selectedValue !== "custom") {
       selectElem.val(selectedValue);
     }
@@ -419,7 +423,7 @@ if ($("#pemasukanFormEdit").length > 0) {
       customInput.removeClass("d-none").val(customText);
     }
 
-    // CASE 3: No income & no custom → leave empty
+    // CASE 3: No outcome & no custom → leave empty
   }
 
   let deletedDetails = [];
@@ -433,7 +437,7 @@ if ($("#pemasukanFormEdit").length > 0) {
   });
 
   // Delegated handler — works for both create & edit tables and for dynamically added rows
-  $(document).on("change", ".income-select", function () {
+  $(document).on("change", ".outcome-select", function () {
     const $select = $(this);
     const $td = $select.closest("td");
     const $customInput = $td.find(".custom-input");
@@ -443,7 +447,7 @@ if ($("#pemasukanFormEdit").length > 0) {
       $customInput.removeClass("d-none").focus();
       $select.addClass("d-none");
     } else {
-      // If user selects a normal income -> hide custom input and clear it
+      // If user selects a normal outcome -> hide custom input and clear it
       $customInput.addClass("d-none").val("");
       // If select was hidden because previously custom, show it again
       $select.removeClass("d-none");
@@ -454,7 +458,7 @@ if ($("#pemasukanFormEdit").length > 0) {
     const newRow = `
       <tr data-detail-id="">
         <td>
-          <select class="form-control income-select"></select>
+          <select class="form-control outcome-select"></select>
           <input type="text" class="form-control mt-2 custom-input d-none" placeholder="Masukkan Rincian Custom">
         </td>
         <td><input type="number" class="form-control nominal-input"></td>
@@ -471,8 +475,8 @@ if ($("#pemasukanFormEdit").length > 0) {
 
     let newSelect = $("#detailTableEdit tbody tr")
       .last()
-      .find(".income-select");
-    loadIncomeOptions(newSelect);
+      .find(".outcome-select");
+    loadoutcomeOptions(newSelect);
   });
 
   $("#updateBtn").on("click", async function () {
@@ -485,7 +489,7 @@ if ($("#pemasukanFormEdit").length > 0) {
       $("#detailTableEdit tbody tr").each(function () {
         let detailId = $(this).data("detail-id");
 
-        let income_val = $(this).find(".income-select").val();
+        let outcome_val = $(this).find(".outcome-select").val();
         let custom_val = $(this).find(".custom-input").val();
         let nominal = parseInt($(this).find(".nominal-input").val());
         let ket = $(this).find(".ket-input").val();
@@ -493,8 +497,8 @@ if ($("#pemasukanFormEdit").length > 0) {
         total += nominal;
 
         let data = {
-          income: income_val === "custom" ? null : income_val,
-          custom_rincian: income_val === "custom" ? custom_val : "",
+          outcome: outcome_val === "custom" ? null : outcome_val,
+          custom_rincian: outcome_val === "custom" ? custom_val : "",
           nominal,
           keterangan: ket,
         };
@@ -507,31 +511,31 @@ if ($("#pemasukanFormEdit").length > 0) {
       });
 
       // UPDATE HEADER
-      await pb.collection("pemasukan_headers").update(headerId, {
+      await pb.collection("pengeluaran_headers").update(headerId, {
         tanggal: $("#tanggal").val(),
         total: total,
       });
 
       // DELETE REMOVED DETAILS
       for (let id of deletedDetails) {
-        await pb.collection("pemasukan_details").delete(id);
+        await pb.collection("pengeluaran_details").delete(id);
       }
 
       // UPDATE existing details
       for (let d of updateDetails) {
-        await pb.collection("pemasukan_details").update(d.id, d.data);
+        await pb.collection("pengeluaran_details").update(d.id, d.data);
       }
 
       // CREATE new details
       for (let d of newDetails) {
-        await pb.collection("pemasukan_details").create({
-          pemasukan_header: headerId,
+        await pb.collection("pengeluaran_details").create({
+          pengeluaran_header: headerId,
           ...d,
         });
       }
 
       showToast("Berhasil diupdate!", "success");
-      setTimeout(() => (window.location.href = "../pemasukan.html"), 800);
+      setTimeout(() => (window.location.href = "../pengeluaran.html"), 800);
     } catch (err) {
       console.log(err);
       showToast("Error: " + err.message, "danger");

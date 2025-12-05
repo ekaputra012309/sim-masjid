@@ -15,7 +15,7 @@ if ($("#example").length > 0) {
               checkbox: `<input type="checkbox" class="row-checkbox" value="${r.id}">`,
               tanggal: formatTanggalIndo(r.tanggal),
               nama_donatur: r.nama_donatur,
-              nominal: r.nominal,
+              nominal: r.nominal.toLocaleString(),
               bayar:
                 r.expand && r.expand.bayar ? r.expand.bayar.cara_bayar : "-",
             }));

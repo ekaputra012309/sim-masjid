@@ -13,7 +13,7 @@ if ($("#example").length > 0) {
           .then((records) => {
             let rows = records.map((r) => ({
               checkbox: `<input type="checkbox" class="row-checkbox" value="${r.id}">`,
-              saldo_awal: r.saldo_awal,
+              saldo_awal: r.saldo_awal.toLocaleString(),
             }));
 
             callback({ data: rows });

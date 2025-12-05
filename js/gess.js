@@ -16,7 +16,7 @@ if ($("#example").length > 0) {
               tanggal: formatTanggalIndo(r.tanggal),
               nama_donatur: r.nama_donatur,
               kaleng: r.kaleng,
-              nominal: r.nominal,
+              nominal: r.nominal.toLocaleString(),
               keterangan: r.keterangan,
             }));
 
