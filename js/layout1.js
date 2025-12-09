@@ -2,7 +2,7 @@ $(document).ready(function () {
   // Load partials
   $("#header").load("partials/header.html", function () {
     if (pb.authStore.model) {
-      $("#usernameDisplay").text(pb.authStore.model.name);
+      $("#usernameDisplay").text(pb.authStore.model.fullname);
     }
   });
 
