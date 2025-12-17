@@ -5,12 +5,14 @@
     <title>Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <script>
-      const BASE_URL1 =
-        location.hostname === "rekap-v2.local" ? "/" : "/sim-masjid/";
+    <base id="baseHref" />
 
-      document.write(`<base href="${BASE_URL1}">`);
-      console.log(location.hostname);
+    <script>
+      document.getElementById("baseHref").href = location.hostname.includes(
+        "github.io"
+      )
+        ? "/sim-masjid/"
+        : "/";
     </script>
 
     <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
