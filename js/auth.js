@@ -69,7 +69,7 @@ $(document).ready(function () {
       showToast("Login successful! Redirecting…", "success");
 
       setTimeout(() => {
-        window.location.href = "/v/dashboard";
+        window.location.href = "v/dashboard/";
       }, 800);
     } catch (err) {
       let msg = err.message;

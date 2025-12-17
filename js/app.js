@@ -43,10 +43,21 @@ $(document).ready(function () {
   });
 });
 
-const BASE_URL =
-  window.location.hostname === "rekap-v2.local"
-    ? "/" // local path
-    : "/sim-masjid/"; // GitHub Pages path
+const BASE_URL = location.hostname === "rekap-v2.local" ? "/" : "/sim-masjid/";
+
+window.go = (path) => (location.href = BASE_URL + path);
+
+$(document).on("click", "[data-go]", function () {
+  go($(this).data("go"));
+});
+
+$("[data-src]").each(function () {
+  $(this).attr("src", BASE_URL + $(this).data("src"));
+});
+
+$("[data-href]").each(function () {
+  $(this).attr("href", BASE_URL + $(this).data("href"));
+});
 
 // tanggal format
 function formatTanggalIndo(dateString) {
