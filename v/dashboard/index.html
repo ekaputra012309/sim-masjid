@@ -5,22 +5,28 @@
     <title>Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <script src="/assets/js/jquery.min.js"></script>
-    <script src="https://unpkg.com/pocketbase/dist/pocketbase.umd.js"></script>
-    <script src="/js/app.js"></script>
-    <script src="/js/layout1.js"></script>
+    <script>
+      window.BASE_URL = location.hostname.includes("github.io")
+        ? "/sim-masjid/"
+        : "/";
+    </script>
 
-    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico" />
-    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="/assets/css/all.min.css" rel="stylesheet" />
-    <link href="/assets/css/datatables.min.css" rel="stylesheet" />
-    <link href="/assets/css/style.css" rel="stylesheet" />
+    <script>
+      document.write(`
+        <link rel="icon" type="image/x-icon" href="${BASE_URL}assets/img/favicon.ico" />
+        <link href="${BASE_URL}assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="${BASE_URL}assets/css/all.min.css" rel="stylesheet" />
+        <link href="${BASE_URL}assets/css/datatables.min.css" rel="stylesheet" />
+        <link href="${BASE_URL}assets/css/style.css" rel="stylesheet" />
 
-    <script src="/assets/js/bootstrap.bundle.min.js"></script>
-    <script src="/assets/js/datatables.min.js"></script>
+        <script src="${BASE_URL}assets/js/jquery.min.js"><\/script>
+        <script src="${BASE_URL}assets/js/bootstrap.bundle.min.js"><\/script>
+        <script src="${BASE_URL}assets/js/datatables.min.js"><\/script>
 
-    <link href="/assets/select2/css/select2.min.css" rel="stylesheet" />
-    <script src="/assets/select2/js/select2.min.js"></script>
+        <link href="${BASE_URL}assets/select2/css/select2.min.css" rel="stylesheet" />
+        <script src="${BASE_URL}assets/select2/js/select2.min.js"><\/script>
+      `);
+    </script>
     <style>
       .btn-primary {
         background-color: #2a4988 !important;
@@ -185,7 +191,11 @@
           </div>
         </div>
 
-        <script src="/assets/js/chart.umd.min.js"></script>
+        <script>
+          document.write(`
+            <script src="${BASE_URL}assets/js/chart.umd.min.js"><\/script>
+          `);
+        </script>
         <script>
           // Yearly Chart
           new Chart(document.getElementById("yearChart"), {
@@ -276,5 +286,14 @@
 
     <!-- FOOTER -->
     <div id="footer"></div>
+
+    <script src="https://unpkg.com/pocketbase/dist/pocketbase.umd.js"></script>
+
+    <script>
+      document.write(`
+        <script src="${BASE_URL}js/app.js"><\/script>
+        <script src="${BASE_URL}js/layout1.js"><\/script>
+      `);
+    </script>
   </body>
 </html>

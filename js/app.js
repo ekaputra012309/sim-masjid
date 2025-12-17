@@ -51,14 +51,6 @@ $(document).on("click", "[data-go]", function () {
   go($(this).data("go"));
 });
 
-$("[data-src]").each(function () {
-  $(this).attr("src", BASE_URL + $(this).data("src"));
-});
-
-$("[data-href]").each(function () {
-  $(this).attr("href", BASE_URL + $(this).data("href"));
-});
-
 // tanggal format
 function formatTanggalIndo(dateString) {
   if (!dateString) return "-";
