@@ -43,9 +43,7 @@ $(document).ready(function () {
   });
 });
 
-window.BASE_URL = location.hostname.includes("github.io")
-  ? "/sim-masjid/"
-  : "/";
+const BASE_URL = location.hostname === "rekap-v2.local" ? "/" : "/sim-masjid/";
 
 window.go = (path) => (location.href = BASE_URL + path);
 
