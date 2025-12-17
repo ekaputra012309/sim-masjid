@@ -1,12 +1,12 @@
 $(document).ready(function () {
   // Load partials
-  $("#header").load("/partials/header.html", function () {
+  $("#header").load("partials/header.html", function () {
     if (pb.authStore.model) {
       $("#usernameDisplay").text(pb.authStore.model.fullname);
     }
   });
 
-  $("#sidebarContainer").load("/partials/sidebar.html", function () {
+  $("#sidebarContainer").load("partials/sidebar.html", function () {
     // Toggle sidebar for mobile
     $(document).on("click", "#toggleSidebar", function () {
       $("#sidebar").addClass("show");
@@ -18,5 +18,5 @@ $(document).ready(function () {
     });
   });
 
-  $("#footer").load("/partials/footer.html");
+  $("#footer").load("partials/footer.html");
 });
