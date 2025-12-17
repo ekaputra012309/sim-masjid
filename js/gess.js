@@ -52,7 +52,7 @@ if ($("#example").length > 0) {
         return;
       }
       let id = selected.val();
-      window.location.href = BASE_URL + "gess/edit.html?id=" + id;
+      window.location.href = BASE_URL + "v/gess/edit.html?id=" + id;
     });
 
     let idsToDelete = [];
@@ -121,7 +121,7 @@ if ($("#gessForm").length > 0) {
         showToast("Berhasil disimpan!", "success");
 
         setTimeout(() => {
-          window.location.href = "../gess.html";
+          window.location.href = "/v/gess";
         }, 1200);
       } catch (err) {
         showToast("Error: " + err.message, "danger");
@@ -173,7 +173,7 @@ if (recordId && $("#gessEditForm").length > 0) {
       showToast("Updated successfully!", "success");
 
       setTimeout(() => {
-        window.location.href = "../gess.html";
+        window.location.href = "/v/gess";
       }, 1200);
     } catch (err) {
       showToast("Error updating data: " + err.message, "danger");

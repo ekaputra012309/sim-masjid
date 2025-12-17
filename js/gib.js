@@ -51,7 +51,7 @@ if ($("#example").length > 0) {
         return;
       }
       let id = selected.val();
-      window.location.href = BASE_URL + "gib/edit.html?id=" + id;
+      window.location.href = BASE_URL + "v/gib/edit.html?id=" + id;
     });
 
     let idsToDelete = [];
@@ -146,7 +146,7 @@ if ($("#gibForm").length > 0) {
         showToast("Berhasil disimpan!", "success");
 
         setTimeout(() => {
-          window.location.href = "../gib.html";
+          window.location.href = "/v/gib";
         }, 1200);
       } catch (err) {
         showToast("Error: " + err.message, "danger");
@@ -219,7 +219,7 @@ if (recordId && $("#gibEditForm").length > 0) {
       showToast("Updated successfully!", "success");
 
       setTimeout(() => {
-        window.location.href = "../gib.html";
+        window.location.href = "/v/gib";
       }, 1200);
     } catch (err) {
       showToast("Error updating data: " + err.message, "danger");

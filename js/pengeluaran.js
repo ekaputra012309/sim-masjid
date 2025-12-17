@@ -52,7 +52,7 @@ if ($("#example").length > 0) {
         return;
       }
       let id = selected.val();
-      window.location.href = BASE_URL + "pengeluaran/edit.html?id=" + id;
+      window.location.href = BASE_URL + "v/pengeluaran/edit.html?id=" + id;
     });
 
     let idsToDelete = [];
@@ -298,7 +298,7 @@ if ($("#pengeluaranForm").length > 0) {
         showToast("Berhasil disimpan!", "success");
 
         setTimeout(() => {
-          window.location.href = "../pengeluaran.html";
+          window.location.href = "/v/pengeluaran";
         }, 1200);
       } catch (err) {
         showToast("Error: " + err.message, "danger");
@@ -535,7 +535,7 @@ if ($("#pengeluaranFormEdit").length > 0) {
       }
 
       showToast("Berhasil diupdate!", "success");
-      setTimeout(() => (window.location.href = "../pengeluaran.html"), 800);
+      setTimeout(() => (window.location.href = "/v/pengeluaran"), 800);
     } catch (err) {
       console.log(err);
       showToast("Error: " + err.message, "danger");

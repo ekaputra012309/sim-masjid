@@ -44,7 +44,7 @@ if ($("#example").length > 0) {
         return;
       }
       let id = selected.val();
-      window.location.href = BASE_URL + "saldo/edit.html?id=" + id;
+      window.location.href = BASE_URL + "v/saldo/edit.html?id=" + id;
     });
   });
 }
@@ -84,7 +84,7 @@ if (recordId && $("#saldoEditForm").length > 0) {
       showToast("Updated successfully!", "success");
 
       setTimeout(() => {
-        window.location.href = "../saldo.html";
+        window.location.href = "/v/saldo";
       }, 1200);
     } catch (err) {
       showToast("Error updating data: " + err.message, "danger");

@@ -4,7 +4,8 @@ const pb = new PocketBase("https://eko012309.alwaysdata.net");
 $(document).ready(function () {
   // Redirect if not logged in
   if (!pb.authStore.isValid) {
-    window.location.href = "index.html";
+    // window.location.href = "index.html";
+    window.location.href = "/";
   }
 
   // Logout modal
@@ -14,7 +15,8 @@ $(document).ready(function () {
 
   $(document).on("click", "#confirmLogoutBtn", function () {
     pb.authStore.clear();
-    window.location.href = "index.html?loggedout=1";
+    // window.location.href = "/index.html?loggedout=1";
+    window.location.href = "/?loggedout=1";
   });
 
   //   sidebar active

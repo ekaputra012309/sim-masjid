@@ -52,7 +52,7 @@ if ($("#example").length > 0) {
         return;
       }
       let id = selected.val();
-      window.location.href = BASE_URL + "pemasukan/edit.html?id=" + id;
+      window.location.href = BASE_URL + "v/pemasukan/edit.html?id=" + id;
     });
 
     let idsToDelete = [];
@@ -296,7 +296,7 @@ if ($("#pemasukanForm").length > 0) {
         showToast("Berhasil disimpan!", "success");
 
         setTimeout(() => {
-          window.location.href = "../pemasukan.html";
+          window.location.href = "/v/pemasukan";
         }, 1200);
       } catch (err) {
         showToast("Error: " + err.message, "danger");
@@ -531,7 +531,7 @@ if ($("#pemasukanFormEdit").length > 0) {
       }
 
       showToast("Berhasil diupdate!", "success");
-      setTimeout(() => (window.location.href = "../pemasukan.html"), 800);
+      setTimeout(() => (window.location.href = "/v/pemasukan"), 800);
     } catch (err) {
       console.log(err);
       showToast("Error: " + err.message, "danger");

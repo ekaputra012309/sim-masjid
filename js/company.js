@@ -50,7 +50,7 @@ $(document).ready(function () {
         showToast("Perusahaan berhasil diupdate!", "success");
 
         setTimeout(() => {
-          window.location.href = "company.html";
+          window.location.href = "/v/settings";
         }, 1200);
       } catch (err) {
         console.error(err);
