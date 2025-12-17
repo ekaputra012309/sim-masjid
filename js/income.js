@@ -109,7 +109,7 @@ if ($("#incomeForm").length > 0) {
         showToast("Berhasil disimpan!", "success");
 
         setTimeout(() => {
-          window.location.href = "/v/income";
+          window.location.href = BASE_URL + "v/income";
         }, 1200);
       } catch (err) {
         showToast("Error: " + err.message, "danger");
@@ -153,7 +153,7 @@ if (recordId && $("#incomeEditForm").length > 0) {
       showToast("Updated successfully!", "success");
 
       setTimeout(() => {
-        window.location.href = "/v/income";
+        window.location.href = BASE_URL + "v/income";
       }, 1200);
     } catch (err) {
       showToast("Error updating data: " + err.message, "danger");
