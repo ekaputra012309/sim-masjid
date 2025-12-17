@@ -4,6 +4,14 @@
     <meta charset="UTF-8" />
     <title>SIM Masjid App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script>
+      const BASE_URL =
+        location.hostname === "rekap-v2.local" ? "/" : "/sim-masjid/";
+
+      document.write(`<base href="${BASE_URL}">`);
+    </script>
+
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="assets/css/all.min.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
